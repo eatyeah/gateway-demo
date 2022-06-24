@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShanghaiController {
 
     @GetMapping("/show")
-    public String show(){
-        return "这里是上海！";
+    public String show(String name,Integer age){
+        return "这里是上海！"+name+","+age;
     }
 
 

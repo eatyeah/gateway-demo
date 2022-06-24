@@ -13,6 +13,9 @@ spring:
           uri: lb://shanghai
           predicates:
             - Path=/sh/**
+            - Query=name
+          filters:
+            - AddRequestParameter=age,80
         # 如果java访问这个数字元素的方式:spring.cloud.gateway.routes[0].predicates[0]
         # routes属性实际上是一个数组,yml文件中出现 "- ...."配置时表示当前配置时一个数组元素
         - id: gateway-beijing # 这个配置指定这个路由的名称,这个名称和其他任何位置没有关联

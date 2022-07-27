@@ -13,6 +13,7 @@ public class BeijingController {
     @GetMapping("/show")
     public String show(){
         return "这里是北京！";
+
     }
 
 

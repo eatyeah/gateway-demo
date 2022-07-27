@@ -7,3 +7,17 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+    gateway:
+      routes:    # gateway开始编写路由信息
+        # routes是一个数组类型的变量,yml文件中出现"- ..."表示当前配置的是数组元素
+        - id: gateway-beijing # 设置这个路由的名称,名称和项目没有任何关联,只是别和其它的路由名称重复
+          # uri设置路由的目标
+          # lb就是loadBalance(负载均衡)的缩写,beijing是beijing项目注册到nacos的名称
+          uri: lb://beijing
+          predicates:
+            # Path会设置当访问9000端口时如果路径以bj开头,会路由到上面uri配置的路径
+            - Path=/bj/**
+
+
+
+

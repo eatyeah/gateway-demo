@@ -11,9 +11,9 @@ import java.time.ZonedDateTime;
 public class ShanghaiController {
 
     @GetMapping("/show")
-    public String show(){
+    public String show(String name,Integer age){
         System.out.println(ZonedDateTime.now());
-        return "这里是上海！";
+        return "这里是上海！"+name+","+age;
     }
 
 

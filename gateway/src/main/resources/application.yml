@@ -16,9 +16,12 @@ spring:
       routes:    # gateway开始编写路由信息
         - id: gateway-shanghai
           uri: lb://shanghai
+          filters:
+            - AddRequestParameter=age,80
           predicates:
             - Path=/sh/**
-            - Between=2022-07-28T09:54:30.264611600+08:00[Asia/Shanghai],2022-07-28T09:55:00.264611600+08:00[Asia/Shanghai]
+            - Query=name   # 检查请求中是否包含name属性,包含才能路由
+#            - Between=2022-07-28T09:54:30.264611600+08:00[Asia/Shanghai],2022-07-28T09:55:00.264611600+08:00[Asia/Shanghai]
         # routes是一个数组类型的变量,yml文件中出现"- ..."表示当前配置的是数组元素
         # 如果想访问下面数组元素的uri属性,实际结构为spring.cloud.gateway.routes[0].uri
         - id: gateway-beijing # 设置这个路由的名称,名称和项目没有任何关联,只是别和其它的路由名称重复

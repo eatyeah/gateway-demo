@@ -3,37 +3,4 @@ server:
 spring:
   application:
     name: gateway
-  cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848
-    gateway:
-#      discovery:
-#        locator:
-#          # 默认情况gateway不开启动态路由,通过enabled: true开启动态路由
-#          # 路由规则是在9000端口号后面先编写路由目标项目注册到nacos的名称,再编写具体路径
-#          enabled: true
-      routes:    # gateway开始编写路由信息
-        - id: gateway-shanghai
-          uri: lb://shanghai
-          filters:
-            - AddRequestParameter=age,80
-          predicates:
-            - Path=/sh/**
-            - Query=name   # 检查请求中是否包含name属性,包含才能路由
-#            - Between=2022-07-28T09:54:30.264611600+08:00[Asia/Shanghai],2022-07-28T09:55:00.264611600+08:00[Asia/Shanghai]
-        # routes是一个数组类型的变量,yml文件中出现"- ..."表示当前配置的是数组元素
-        # 如果想访问下面数组元素的uri属性,实际结构为spring.cloud.gateway.routes[0].uri
-        - id: gateway-beijing # 设置这个路由的名称,名称和项目没有任何关联,只是别和其它的路由名称重复
-          # uri设置路由的目标
-          # lb就是loadBalance(负载均衡)的缩写,beijing是beijing项目注册到nacos的名称
-          uri: lb://beijing
-          # predicates翻译为断言,断言的意思就是判断某个条件为真时,要做的事情
-          predicates:
-            # Path会设置当访问9000端口时如果路径以bj开头,会路由到上面uri配置的路径
-            # Path就是路径断言,判断路径是否为/bj/开头,如果路径满足就会执行路由
-            - Path=/bj/**
-            # localhost:9000/bj/show 路由到 localhost:9001/bj/show
-            # 当前配置结构找到Path=/bj/**路径为 spring.cloud.gateway.routes[0].predicates[2]
-
 

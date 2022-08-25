@@ -19,6 +19,10 @@ spring:
       routes:   # 开始编写Gateway路由配置
         - id: gateway-shanghai
           uri: lb://shanghai
+          filters:
+            # 在请求到控制器前,添加参数age=18
+            # 控制器中可以获得这个age参数的值
+            - AddRequestParameter=age,18
           predicates:
             - Path=/sh/**
             # 当前请求必须包含名为name的参数,才能正常路由

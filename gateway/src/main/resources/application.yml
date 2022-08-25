@@ -9,23 +9,29 @@ spring:
         # 网关也是微服务项目的一部分,所以也要注册到Nacos
         server-addr: localhost:8848
     gateway:
+      discovery:
+        locator:
+          # 这是开启动态路由的配置,动态路由设置默认是不开启的 也就是enabled: false
+          # 路由规则是在网关端口号后,先写路由目标注册到nacos的名称,再编写具体路径
+          # localhost:9000/beijing/bj/show
+          enabled: true
       # routes是一个数组,数组中的数据使用"-"开头表示数据中的一个对象
-      routes:   # 开始编写Gateway路由配置
-        - id: gateway-shanghai
-          uri: lb://shanghai
-          predicates:
-            - Path=/sh/**
-          # 当前路由的名称,和任何其他名称没有关联,只是不能和后面再出现的路由名称重复
-        - id: gateway-beijing
-          # 当匹配当前路由设置时,访问指定的服务器名称(Nacos注册的服务器名称)
-          # lb是LoadBalance的缩写,是负载均衡的调用
-          uri: lb://beijing
-          # 编写断言配置,断言的意思就是满足指定条件时运行某些事情
-          # predicates:断言
-          predicates:
-            # 断言中我们编写当路径满足指定条件时
-            # 当请求路径以/bj/开头时,就会路由到上面设置好的beijing服务器运行
-            # ↓ P大写!!!!!!!!
-            - Path=/bj/**
-      # spring.cloud.gateway.routes[0].uri
-      # spring.cloud.gateway.routes[0].predicates[0]
+#      routes:   # 开始编写Gateway路由配置
+#        - id: gateway-shanghai
+#          uri: lb://shanghai
+#          predicates:
+#            - Path=/sh/**
+#          # 当前路由的名称,和任何其他名称没有关联,只是不能和后面再出现的路由名称重复
+#        - id: gateway-beijing
+#          # 当匹配当前路由设置时,访问指定的服务器名称(Nacos注册的服务器名称)
+#          # lb是LoadBalance的缩写,是负载均衡的调用
+#          uri: lb://beijing
+#          # 编写断言配置,断言的意思就是满足指定条件时运行某些事情
+#          # predicates:断言
+#          predicates:
+#            # 断言中我们编写当路径满足指定条件时
+#            # 当请求路径以/bj/开头时,就会路由到上面设置好的beijing服务器运行
+#            # ↓ P大写!!!!!!!!
+#            - Path=/bj/**
+#      # spring.cloud.gateway.routes[0].uri
+#      # spring.cloud.gateway.routes[0].predicates[0]

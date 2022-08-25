@@ -11,6 +11,10 @@ spring:
     gateway:
       # routes是一个数组,数组中的数据使用"-"开头表示数据中的一个对象
       routes:   # 开始编写Gateway路由配置
+        - id: gateway-shanghai
+          uri: lb://shanghai
+          predicates:
+            - Path=/sh/**
           # 当前路由的名称,和任何其他名称没有关联,只是不能和后面再出现的路由名称重复
         - id: gateway-beijing
           # 当匹配当前路由设置时,访问指定的服务器名称(Nacos注册的服务器名称)

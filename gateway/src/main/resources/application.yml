@@ -9,31 +9,32 @@ spring:
         # 网关也是微服务项目的一部分,所以也要注册到Nacos
         server-addr: localhost:8848
     gateway:
-      discovery:
-        locator:
-          # 这就是开启动态路由的配置,动态路由配置默认是关闭的,需要手动开启才能生效
-          # 动态路由生成规则为:在网关端口号后先写要路由到的目标服务器在nacos注册的名称
-          # 再编写具体路径
-          # 例如 localhost:9001/bj/show   ->  localhost:9000/beijing/bj/show
-          enabled: true
-#      # routes就是路由的意思,在此处配置是一个数组类型
-#      routes:
-#        - id: gateway-shanghai
-#          uri: lb://shanghai
-#          predicates:
-#            - Path=/sh/**
-#        # 数组类型中编写 "-"开头,表示是一个数组元素
-#        # id表示当前路由的名称,没有和其他任何出现过的名字关联,和之后的内容也没有关联
-#        - id: gateway-beijing
-#          # 当前路由配置的路由目标配置,也就是路由路径
-#          # lb是LoadBalance的缩写,beijing是路由目标服务器的名称
-#          uri: lb://beijing
-#          # 下面编写路由条件\规则,也就是满足什么样的路径会访问beijing服务器
-#          # 我们要配置内置断言来配置路径路径   predicates(断言)
-#          predicates:
-#            # 断言其实就是满足某个条件时做什么操作的设置
-#            # predicates和routes类似,也是一个数组类型
-#            # ↓  P大写!!!!!  表示以/bj/开头的请求都会路由到beijing服务器
-#            - Path=/bj/**
+#      discovery:
+#        locator:
+#          # 这就是开启动态路由的配置,动态路由配置默认是关闭的,需要手动开启才能生效
+#          # 动态路由生成规则为:在网关端口号后先写要路由到的目标服务器在nacos注册的名称
+#          # 再编写具体路径
+#          # 例如 localhost:9001/bj/show   ->  localhost:9000/beijing/bj/show
+#          enabled: true
+      # routes就是路由的意思,在此处配置是一个数组类型
+      routes:
+        - id: gateway-shanghai
+          uri: lb://shanghai
+          predicates:
+            - Path=/sh/**
+            - After=2022-09-27T10:19:46.898+08:00[Asia/Shanghai]
+        # 数组类型中编写 "-"开头,表示是一个数组元素
+        # id表示当前路由的名称,没有和其他任何出现过的名字关联,和之后的内容也没有关联
+        - id: gateway-beijing
+          # 当前路由配置的路由目标配置,也就是路由路径
+          # lb是LoadBalance的缩写,beijing是路由目标服务器的名称
+          uri: lb://beijing
+          # 下面编写路由条件\规则,也就是满足什么样的路径会访问beijing服务器
+          # 我们要配置内置断言来配置路径路径   predicates(断言)
+          predicates:
+            # 断言其实就是满足某个条件时做什么操作的设置
+            # predicates和routes类似,也是一个数组类型
+            # ↓  P大写!!!!!  表示以/bj/开头的请求都会路由到beijing服务器
+            - Path=/bj/**
 # spring.cloud.gateway.routes[0].uri
 # spring.cloud.gateway.routes[0].predicates[0]

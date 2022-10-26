@@ -8,4 +8,21 @@ spring:
       discovery:
         # 网关也是微服务项目的一部分,所以也要注册到Nacos
         server-addr: localhost:8848
-
+    gateway:
+      # routes就是路由的意思,这是属性是一个数组类型,其中的值都是数组元素
+      routes:
+          # 数组元素配置中,-开头表示一个数组元素的开始,后面所有内容都是这个元素的内容
+          # id表示当前路由的名称,和任何之前出现过的名字没有任何关联,唯一的要求就是不要后之后的id重复
+        - id: gateway-beijing
+          # 下面的配置是路由的目标,也就是目标的服务器名称
+          # lb是LoadBalance的缩写,beijing是服务器名称
+          uri: lb://beijing
+          # predicates是断言的意思,就是满足某个条件时,去执行某些操作的设置
+          predicates:
+            # predicates也是一个数组,配置断言的内容
+            # 这个断言的意思就是如果访问的路径是/bj/开头(**表示任何路径),
+            # 就去访问上面定好的beijing服务器
+            # ↓   P一定要大写!!!!!!!
+            - Path=/bj/**
+# spring.cloud.gateway.routes[0].uri
+# spring.cloud.gateway.routes[0].predicates[0]

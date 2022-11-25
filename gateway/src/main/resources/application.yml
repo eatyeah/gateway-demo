@@ -20,11 +20,17 @@ spring:
       routes:
         - id: gateway-shanghai
           uri: lb://shanghai
+          filters:
+            - AddRequestParameter=age,18
           predicates:
             - Path=/sh/**
             # After是时间断言,判断访问时间是否指定时间之后
             # 如果早于这个时间,访问结果时404,晚于这个时间才能正常访问, 和上面Path断言是"与"的关系
-            - After=2022-11-25T11:53:50.087+08:00[Asia/Shanghai]
+            # - After=2022-11-25T11:53:50.087+08:00[Asia/Shanghai]
+            # - Before=2022-11-25T14:17:30.087+08:00[Asia/Shanghai]
+            # - Between=2022-11-25T14:20:15.087+08:00[Asia/Shanghai],2022-11-25T14:20:30.087+08:00[Asia/Shanghai]
+            # Query断言判断请求中是否包含指定的参数名称(username)的参数,如果不包含就发生404错误
+            - Query=username
 
 
 

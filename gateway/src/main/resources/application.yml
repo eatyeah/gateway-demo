@@ -11,6 +11,10 @@ spring:
     gateway:
       # routes是路由的意思,表示开始配置路由设置,它是一个数组的类型
       routes:
+        - id: gateway-shanghai
+          uri: lb://shanghai
+          predicates:
+            - Path=/sh/**
           # 数组类型赋值时,每个数组元素都要以"-"开头,一个"-"之后的所有内容,都是这个元素包含的内容
           # id表示当前路由的名称,这个名称和之前我们学习的任何名称没有关联,
           # 唯一的要求就是不能和之后出现的路由id重复

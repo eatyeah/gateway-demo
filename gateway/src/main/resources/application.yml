@@ -1,0 +1,10 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        # 网关也是微服务项目的一个模块,需要注册到Nacos才能生效
+        server-addr: localhost:8848

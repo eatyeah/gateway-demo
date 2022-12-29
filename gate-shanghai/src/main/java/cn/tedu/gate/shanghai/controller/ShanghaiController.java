@@ -8,7 +8,6 @@ import java.time.ZonedDateTime;
 
 @RestController
 @RequestMapping("/sh")
-
 public class ShanghaiController {
 
     @GetMapping("/show")
